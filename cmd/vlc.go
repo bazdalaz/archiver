@@ -25,11 +25,12 @@ func pack(_ *cobra.Command, args []string) {
 	}
 	
 	filePath := args[0]
-
+ 
 	r, err := os.Open(filePath)
 	if err != nil {
 		handelError(err)
 	}
+	defer r.Close()
 
 	data, err := io.ReadAll(r)
 	if err != nil {
