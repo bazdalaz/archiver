@@ -8,13 +8,20 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Short: "A simple archiving tool",
+	Short: "File archiving tool",
 }
 
 // Execute executes the root command.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
+		handelError(err)
 	}
+}
+
+
+// handelError prints the error and exits the program.
+func handelError(err error) {
+	_, _ = fmt.Fprintln(os.Stderr, err)
+	os.Exit(1)
+	
 }
