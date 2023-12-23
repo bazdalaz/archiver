@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/bazdalaz/archiver/lib/vlc"
 )
 
 const packedExtension = ".vlc"
@@ -23,9 +24,9 @@ func pack(_ *cobra.Command, args []string) {
 	if len(args) == 0 {
 		handelError(ErrEmptyPath)
 	}
-	
-	filePath := args[0]
- 
+
+	filePath := args[0] //BUG: check if file exists
+
 	r, err := os.Open(filePath)
 	if err != nil {
 		handelError(err)
@@ -37,14 +38,13 @@ func pack(_ *cobra.Command, args []string) {
 		handelError(err)
 	}
 
-	//packed := Encode(data)
-	packed := "" + string(data) //TODO: implement Encode
+	packed := vlc.Encode(string(data))
 
 
 	err = os.WriteFile(packedFileName(filePath), []byte(packed), 0644)
 	if err != nil {
 		handelError(err)
-	}
+	} 
 }
 
 func packedFileName(path string) string {
