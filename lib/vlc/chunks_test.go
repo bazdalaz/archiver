@@ -42,124 +42,6 @@ func Test_splitByChunks(t *testing.T) {
 	}
 }
 
-func TestBinaryChunks_ToHex(t *testing.T) {
-	tests := []struct {
-		name string
-		bcs  BinaryChunks
-		want hexChunks
-	}{
-		{
-			name: "base test",
-			bcs:  BinaryChunks{"00100010", "01101001", "01000000"},
-			want: hexChunks{"22", "69", "40"},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.bcs.ToHex(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("BinarryChunks.ToHex() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func Test_hexChunks_ToString(t *testing.T) {
-	tests := []struct {
-		name string
-		hcs  hexChunks
-		want string
-	}{
-
-		{
-			name: "base test",
-			hcs:  hexChunks{"22", "69", "40"},
-			want: "22 69 40",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.hcs.ToString(); got != tt.want {
-				t.Errorf("hexChunks.ToString() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestNewHexChunks(t *testing.T) {
-
-	tests := []struct {
-		name string
-		str  string
-		want hexChunks
-	}{
-		{
-			name: "base test",
-			str:  "22 69 40",
-			want: hexChunks{"22", "69", "40"},
-		},
-		{
-			name: "empty string",
-			str:  "",
-			want: hexChunks{""},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := NewHexChunks(tt.str); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("NewHexChunks() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func Test_hexChunk_ToBinary(t *testing.T) {
-	tests := []struct {
-		name string
-		hc   hexChunk
-		want BinaryChunk
-	}{
-		{
-			name: "base test",
-			hc:   "01",
-			want: "00000001",
-		},
-		{
-			name: "different length",
-			hc:   "2",
-			want: "00000010",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.hc.ToBinary(); got != tt.want {
-				t.Errorf("hexChunk.ToBinary() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func Test_hexChunks_ToBinary(t *testing.T) {
-	tests := []struct {
-		name string
-		hcs  hexChunks
-		want BinaryChunks
-	}{
-
-		{
-			name: "base test",
-			hcs:  hexChunks{"00", "20", "40", "00"},
-			want: BinaryChunks{"00000000", "00100000", "01000000", "00000000"},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.hcs.ToBinary(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("hexChunks.ToBinary() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 func TestBinaryChunks_Join(t *testing.T) {
 	tests := []struct {
 		name string
@@ -176,6 +58,28 @@ func TestBinaryChunks_Join(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.bcs.Join(); got != tt.want {
 				t.Errorf("BinaryChunks.Join() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestNeBinChunks(t *testing.T) {
+	tests := []struct {
+		name string
+		data []byte
+		want BinaryChunks
+	}{
+		{
+			name: "base test",
+			data: []byte{20, 30, 60, 18},
+			want: BinaryChunks{"00010100", "00011110", "00111100", "00010010"},
+
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NeBinChunks(tt.data); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NeBinChunks() = %v, want %v", got, tt.want)
 			}
 		})
 	}

@@ -8,7 +8,7 @@ import (
 type encodingTable map[rune]string
 
 // Encode encodes string to hex implemented by vlc algorithm
-func Encode(str string) string {
+func Encode(str string) []byte {
 	// prepare text: M -> !m
 	str = prepareText(str)
 
@@ -19,14 +19,14 @@ func Encode(str string) string {
 	chunks := splitByChunks(bStr, chunkSize)
 
 	//return bytes to hex: 0100111 10101011 10100010 -> 4D AB A2
-	return chunks.ToHex().ToString()
+	return chunks.Bytes()
 
 }
 
 // Decode decodes string from hex implemented by vlc algorithm
-func Decode(encodedText string) string {
+func Decode(encodedData []byte) string {
 
-	bStr := NewHexChunks(encodedText).ToBinary().Join()
+	bStr := NeBinChunks(encodedData).Join()
 	dTree := getEncodingTable().DecodingTree()
 
 	return exportText(dTree.Decode(bStr))
