@@ -7,7 +7,6 @@ var packCmd = &cobra.Command{
 	Short: "Pack file",
 }
 
-
 func init() {
 	rootCmd.AddCommand(packCmd)
 }

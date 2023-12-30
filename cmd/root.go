@@ -18,10 +18,9 @@ func Execute() {
 	}
 }
 
-
 // handelError prints the error and exits the program.
 func handelError(err error) {
 	_, _ = fmt.Fprintln(os.Stderr, err)
 	os.Exit(1)
-	
+
 }
