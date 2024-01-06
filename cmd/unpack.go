@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/bazdalaz/archiver/lib/vlc"
 	"github.com/bazdalaz/archiver/lib/compression"
+	"github.com/bazdalaz/archiver/lib/compression/vlc"
 )
 
 
