@@ -5,10 +5,16 @@ import (
 	"unicode"
 )
 
+type EncoderDecoder struct {}
+
+func New() EncoderDecoder {
+	return EncoderDecoder{}
+}
+
 type encodingTable map[rune]string
 
 // Encode encodes string to hex implemented by vlc algorithm
-func Encode(str string) []byte {
+func (vlc EncoderDecoder) Encode(str string) []byte {
 	// prepare text: M -> !m
 	str = prepareText(str)
 
@@ -24,7 +30,7 @@ func Encode(str string) []byte {
 }
 
 // Decode decodes string from hex implemented by vlc algorithm
-func Decode(encodedData []byte) string {
+func (vlc EncoderDecoder) Decode(encodedData []byte) string {
 
 	bStr := NeBinChunks(encodedData).Join()
 	dTree := getEncodingTable().DecodingTree()
